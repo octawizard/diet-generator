@@ -40,7 +40,8 @@ object DietGenerator extends App {
     "dried tomato"
   )
   val carbs = Carb.of("pasta", "brown rice", "brown bread", "potato", "sweet potato", "quinoa")
-  val weeklyDiet = new WeeklyDiet(proteins, vegetables, carbs)
+
+  val weeklyDiet = new WeeklyDiet(proteins, vegetables, sideVegetables, carbs)
 
   println(weeklyDiet.toString)
 }
