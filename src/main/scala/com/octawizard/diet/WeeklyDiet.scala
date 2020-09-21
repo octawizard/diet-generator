@@ -1,7 +1,5 @@
 package com.octawizard.diet
 
-import java.time.{DayOfWeek, LocalDate}
-
 import com.octawizard.diet.DayOfWeek.WeekDays
 
 /**
@@ -27,17 +25,17 @@ object DayOfWeek {
   val WeekDays = List(Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday)
 }
 
-class WeeklyDiet(proteins: Set[Protein], vegetables: Set[Vegetable], sideVegetables: Set[Vegetable], carbs: Set[Carb]) {
+class WeeklyDiet(proteins: Set[Protein], vegetables: Set[Vegetable], sideVegetables: Set[Vegetable], carbs: Set[Carb])
+  extends SetRandomPicker {
 
   private val diet = generateDiet
 
   private def generateDailyMeals(
-                            proteins: Set[Protein],
-                            vegetables: Set[Vegetable],
-                            sideVegetables: Set[Vegetable],
-                            carbs: Set[Carb])
-  : DailyMeal = {
-    //todo avoid repeated veggies, add rules to limit meat proteins, favouring the rest
+                                  proteins: Set[Protein],
+                                  vegetables: Set[Vegetable],
+                                  sideVegetables: Set[Vegetable],
+                                  carbs: Set[Carb]
+                                ): DailyMeal = {
     val lunch = Meal(randomPick(proteins), randomPick(vegetables), randomPick(sideVegetables, 3), randomPick(carbs))
     val dinner = Meal(randomPick(proteins), randomPick(vegetables), randomPick(sideVegetables, 3), randomPick(carbs))
     DailyMeal(lunch, dinner)
@@ -45,21 +43,6 @@ class WeeklyDiet(proteins: Set[Protein], vegetables: Set[Vegetable], sideVegetab
 
   private def generateDiet: List[(DayOfWeek, DailyMeal)] = {
     WeekDays.map(_ -> generateDailyMeals(proteins, vegetables, sideVegetables, carbs))
-  }
-
-  private def randomPick[T](s: Set[T]): T = {
-    require(s.nonEmpty)
-    val n = util.Random.nextInt(s.size)
-    s.iterator.drop(n).next
-  }
-
-  private def randomPick[T](s: Set[T], count: Int = 1): Set[T] = {
-    require(s.nonEmpty && count > 0)
-    Set.fill(count) {
-      //todo check logic for repetition
-      val n = util.Random.nextInt(s.size)
-      s.iterator.drop(n).next
-    }
   }
 
   override def toString: String = {
@@ -82,6 +65,6 @@ case class DailyMeal(lunch: Meal, dinner: Meal)
 case class Meal(proteins: Protein, vegetables: Vegetable, sideVegetables: Set[Vegetable], carb: Carb) {
 
   override def toString: String = {
-    s"Proteins: $proteins\tVegetables: $vegetables\tSide Vegetables: $sideVegetables\tCarbohydrates: $carb"
+    s"Proteins: $proteins\tVegetable: $vegetables\tSide Vegetables: $sideVegetables\tCarbohydrates: $carb"
   }
 }

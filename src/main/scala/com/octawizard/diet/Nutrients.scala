@@ -4,9 +4,11 @@ package com.octawizard.diet
  * Created by Roberto Manca on 19/09/2020.
  */
 
-sealed trait Nutrient
+sealed class Nutrient(name: String) {
+  override def toString: String = name
+}
 
-case class Protein(name: String) extends Nutrient
+case class Protein(name: String) extends Nutrient(name)
 
 object Protein {
   def of(protein: String, proteins: String*): Set[Protein] = {
@@ -15,7 +17,7 @@ object Protein {
   }
 }
 
-case class Vegetable(name: String) extends Nutrient
+case class Vegetable(name: String) extends Nutrient(name)
 
 object Vegetable {
   def of(v: String, vv: String*): Set[Vegetable] = {
@@ -24,7 +26,7 @@ object Vegetable {
   }
 }
 
-case class Carb(name: String) extends Nutrient
+case class Carb(name: String) extends Nutrient(name)
 
 object Carb {
   def of(c: String, cc: String*): Set[Carb] = {

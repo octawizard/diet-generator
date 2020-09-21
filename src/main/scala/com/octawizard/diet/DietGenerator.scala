@@ -37,6 +37,7 @@ object DietGenerator extends App {
     "carrot",
     "rucola",
     "lettuce",
+    "canon",
     "dried tomato"
   )
   val carbs = Carb.of("pasta", "brown rice", "brown bread", "potato", "sweet potato", "quinoa")
